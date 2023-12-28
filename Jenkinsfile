@@ -29,7 +29,7 @@ pipeline {
                     git config user.email "rohithrockr@gmail.com"
                     git config user.name "Rohith Katikaneni"
                     sed -i "s/replaceImageTag/22/g" sample-repo/manifests/deployment.yml
-                    git add sample-repo/manifests/deployment.yml
+                    git add sample-repo/manifests/deployment.yaml
                     git commit -m "Update deployment image to 22"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                 '''
