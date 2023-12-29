@@ -52,7 +52,7 @@ pipeline {
                 git add sample-repo/manifests/deployment.yaml
                 git commit -m "Update deployment image to 22"
             """
-            withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
+            withCredentials([gitUsernamePassword(credentialsId: 'github-cred', gitToolName: 'Default')]) {
                 sh "git push https://github.com/rohithaus/JenkinsDemo main"
             }
         }   
