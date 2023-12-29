@@ -18,44 +18,44 @@ pipeline {
         // build the project and create a JAR file
       }
     }
-    // stage('Update Deployment File') {
-    //     environment {
-    //         GIT_REPO_NAME = "JenkinsDemo"
-    //         GIT_USER_NAME = "rohithaus"
-    //     }
-    //     steps {
-    //         withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
-    //             sh '''
-    //                 git config user.email "rohithrockr@gmail.com"
-    //                 git config user.name "Rohith Katikaneni"
-    //                 sed -i "s/replaceImageTag/22/g" sample-repo/manifests/deployment.yaml
-    //                 git add sample-repo/manifests/deployment.yaml
-    //                 git commit -m "Update deployment image to 22"
-    //                 git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} main
-    //             '''
-    //         }
-    //     }
-    // }
-    stage("Update the deployment image tags") {
+    stage('Update Deployment File') {
+        environment {
+            GIT_REPO_NAME = "JenkinsDemo"
+            GIT_USER_NAME = "rohithaus"
+        }
         steps {
-            sh """
-                sed -i "s/replaceImageTag/22/g" sample-repo/manifests/deployment.yaml
-                cat sample-repo/manifests/deployment.yaml
-            """
-        }  
-    }
-    stage("Push the changes to github") {
-        steps {
-            sh """
-                git config user.email "rohithrockr@gmail.com"
-                git config user.name "Rohith Katikaneni"
-                git add sample-repo/manifests/deployment.yaml
-                git commit -m "Update deployment image to 22"
-            """
-            withCredentials([gitUsernamePassword(credentialsId: 'github-cred', gitToolName: 'Default')]) {
-                sh "git push https://github.com/rohithaus/JenkinsDemo main"
+            withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+                sh '''
+                    git config user.email "rohithrockr@gmail.com"
+                    git config user.name "Rohith Katikaneni"
+                    sed -i "s/replaceImageTag/23/g" sample-repo/manifests/deployment.yaml
+                    git add sample-repo/manifests/deployment.yaml
+                    git commit -m "Update deployment image to 23"
+                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+                '''
             }
-        }   
+        }
     }
+    // stage("Update the deployment image tags") {
+    //     steps {
+    //         sh """
+    //             sed -i "s/replaceImageTag/22/g" sample-repo/manifests/deployment.yaml
+    //             cat sample-repo/manifests/deployment.yaml
+    //         """
+    //     }  
+    // }
+    // stage("Push the changes to github") {
+    //     steps {
+    //         sh """
+    //             git config user.email "rohithrockr@gmail.com"
+    //             git config user.name "Rohith Katikaneni"
+    //             git add sample-repo/manifests/deployment.yaml
+    //             git commit -m "Update deployment image to 22"
+    //         """
+    //         withCredentials([gitUsernamePassword(credentialsId: 'github-cred', gitToolName: 'Default')]) {
+    //             sh "git push https://github.com/rohithaus/JenkinsDemo main"
+    //         }
+    //     }   
+    // }
   }
 }
